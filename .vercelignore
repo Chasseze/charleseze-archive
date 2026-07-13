@@ -1,0 +1,10 @@
+.claude
+.vercel
+.git
+.gitignore
+README.md
+app.js
+sections.jsx
+shells.jsx
+tweaks-panel.jsx
+.DS_Store

@@ -1,0 +1,12 @@
+{
+  "name": "charleseze-archive",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Charles Eze — Archive & Digital Portfolio",
+  "scripts": {
+    "dev": "python3 -m http.server 3032",
+    "start": "python3 -m http.server 3032",
+    "deploy": "vercel",
+    "deploy:prod": "vercel --prod"
+  }
+}
