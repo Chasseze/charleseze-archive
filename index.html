@@ -343,7 +343,14 @@
          sections.jsx — inline
          ============================================================ */
 
-      function Placeholder({ label, className }) {
+      function Placeholder({ label, className, src }) {
+        if (src) {
+          return (
+            <div className={"ph ph-filled " + (className || "")}>
+              <img src={src} alt={label || ""} loading="lazy" />
+            </div>
+          );
+        }
         return (
           <div className={"ph " + (className || "")} aria-label={label}>
             <span className="ph-label">{label}</span>
@@ -371,7 +378,7 @@
         );
       }
 
-      function AboutSection() {
+      function AboutSection({ onNavigate }) {
         const D = window.PORTFOLIO;
         const a = D.about;
         return (
@@ -383,9 +390,16 @@
                 <div className="body-copy">
                   {a.paragraphs.map((p, i) => <p key={i}>{p}</p>)}
                 </div>
+                {onNavigate && (
+                  <button type="button" className="inline-cta" onClick={() => onNavigate("projects")}>
+                    <span>View selected work</span>
+                    <span className="inline-cta-arrow" aria-hidden="true">→</span>
+                  </button>
+                )}
               </div>
               <aside className="about-aside">
-                <Placeholder label="image" className="portrait" />
+                <Placeholder label="Portrait of Charles Eze" className="portrait" src="assets/images/portrait.jpg" />
+                <p className="photo-caption">Charles Eze · ChassEZE Group</p>
                 <div className="fact-list">
                   {a.facts.map((f, i) => (
                     <div className="fact" key={i}>
@@ -425,20 +439,56 @@
 
       function ServicesSection() {
         const D = window.PORTFOLIO;
+        let lastGroup = null;
         return (
           <section className="section">
             <SectionHead index="02" label="Services" title="What I can do for you." />
             <div className="services">
-              {D.services.map((s, i) => (
-                <article className="svc" key={i}>
-                  <div className="svc-no">{s.no}</div>
-                  <h3 className="svc-title">{s.title}</h3>
-                  <p className="svc-body">{s.body}</p>
-                </article>
-              ))}
+              {D.services.map((s, i) => {
+                const showGroup = s.group && s.group !== lastGroup;
+                if (s.group) lastGroup = s.group;
+                return (
+                  <article className={"svc" + (showGroup ? " svc-group-start" : "")} key={s.no || i} data-group={s.group || undefined}>
+                    {showGroup && <div className="svc-group">{s.group}</div>}
+                    <div className="svc-no">{s.no}</div>
+                    <h3 className="svc-title">{s.title}</h3>
+                    <p className="svc-body">{s.body}</p>
+                  </article>
+                );
+              })}
             </div>
             <StageFoot meta="INDEX / 02" />
           </section>
+        );
+      }
+
+      function ProjectCard({ p, featured }) {
+        const href = p.url || "#";
+        const external = Boolean(p.url);
+        return (
+          <a
+            className={"project" + (featured ? " project-featured" : "")}
+            href={href}
+            {...(external ? { target: "_blank", rel: "noopener noreferrer" } : { onClick: (e) => e.preventDefault() })}
+          >
+            <div className="p-media">
+              <Placeholder label={p.title + " — cover"} className="p-img" src={p.img} />
+            </div>
+            <div className="p-body">
+              <div className="p-tag">{p.tag}</div>
+              <div className="p-meta">
+                <h3 className="p-title">{p.title}</h3>
+                <span className="p-year">{p.year}</span>
+              </div>
+              {featured && p.outcome && <p className="p-outcome">{p.outcome}</p>}
+              <p className="p-blurb">{p.blurb}</p>
+              {external && (
+                <span className="p-link">
+                  Visit project <span aria-hidden="true">↗</span>
+                </span>
+              )}
+            </div>
+          </a>
         );
       }
 
@@ -449,15 +499,7 @@
             <SectionHead index="03" label="Projects" title="Selected work from the archive." />
             <div className="projects">
               {D.projects.map((p) => (
-                <a className="project" href="#" key={p.id} onClick={(e) => e.preventDefault()}>
-                  <Placeholder label={p.id + " — cover"} className="p-img" />
-                  <div className="p-tag">{p.tag}</div>
-                  <div className="p-meta">
-                    <h3 className="p-title">{p.title}</h3>
-                    <span className="p-year">{p.year}</span>
-                  </div>
-                  <p className="p-blurb">{p.blurb}</p>
-                </a>
+                <ProjectCard p={p} key={p.id} featured={Boolean(p.featured)} />
               ))}
             </div>
             <StageFoot meta="INDEX / 03" />
@@ -666,7 +708,7 @@
                 <ContactForm />
               </div>
               <aside className="contact-aside">
-                <Placeholder label="image" className="contact-photo" />
+                <Placeholder label="Portrait of Charles Eze" className="contact-photo" src="assets/images/portrait.jpg" />
                 <div className="contact-links">
                   {c.links.map((l, i) => (
                     <a
@@ -885,7 +927,7 @@
                   </div>
                 </div>
                 <aside className="cover-aside">
-                  <Placeholder label="image" className="cover-photo" />
+                  <Placeholder label="Charles Eze cover" className="cover-photo" src="assets/images/chassezecover.jpg" />
                 </aside>
               </div>
             </div>
@@ -983,6 +1025,7 @@
 
         const Shell = t.direction === "editorial" ? EditorialShell : ArchiveShell;
         const SectionComp = SECTION_MAP[active] || SECTION_MAP.about;
+        const sectionProps = active === "about" ? { onNavigate: selectSection } : {};
 
         const tweaks = (
           <TweaksPanel title="Tweaks">
@@ -1036,7 +1079,7 @@
         return (
           <>
             <Shell active={active} setActive={selectSection} onHome={goHome}>
-              <SectionComp />
+              <SectionComp {...sectionProps} />
             </Shell>
             {tweaks}
           </>

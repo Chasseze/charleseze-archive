@@ -5,7 +5,7 @@ window.PORTFOLIO = {
     name: "Charles Eze",
     handle: "charleseze",
     role: "Product Designer & Frontend Developer",
-    location: "Lagos, NG — remote worldwide",
+    location: "Lagos, NG & The US",
     status: "Available for select work",
     tagline:
       "I design and build clear, durable digital products — from the first wireframe to the shipped interface.",
@@ -29,7 +29,8 @@ window.PORTFOLIO = {
       "I care about clarity over decoration, and about leaving behind codebases and design files that the next person can actually read. This archive collects the work, the services I offer, and a few notes along the way.",
     ],
     facts: [
-      { k: "Based in", v: "Lagos, Nigeria" },
+      { k: "Also known as", v: "Charles Osheokwu" },
+      { k: "Based in", v: "Lagos, NG & The US" },
       { k: "Working since", v: "2016" },
       { k: "Focus", v: "Product design · Frontend" },
       { k: "Stack", v: "Figma · React · TypeScript" },
@@ -71,86 +72,80 @@ window.PORTFOLIO = {
   services: [
     {
       no: "01",
+      group: "Design",
       title: "Product Design",
       body:
-        "End-to-end interface design — research, flows, wireframes and high-fidelity UI for web and mobile.",
+        "End-to-end interface design — research, flows, prototypes and high-fidelity UI for web and mobile.",
     },
     {
       no: "02",
+      group: "Design",
       title: "Design Systems",
       body:
         "Durable component libraries and token systems that keep a growing product consistent and fast to build.",
     },
     {
       no: "03",
+      group: "Build",
       title: "Frontend Development",
       body:
         "Pixel-accurate, accessible frontends in React and TypeScript — the bridge from design file to shipped code.",
     },
     {
       no: "04",
+      group: "Build",
       title: "Full-Stack Development",
       body:
-        "End-to-end product builds across interface and server — APIs, auth, data models and the shipped frontend that uses them.",
+        "End-to-end product builds across interface and server — APIs, auth, data models and the shipped frontend.",
     },
     {
       no: "05",
-      title: "Backend Engineering",
-      body:
-        "Reliable server-side systems: APIs, databases, authentication, integrations and the infrastructure that keeps a product running.",
-    },
-    {
-      no: "06",
-      title: "Publishing & CMS Platforms",
-      body:
-        "Custom blogging and content systems — editorial workflows, CMS setup and reading experiences built for writers and publishers.",
-    },
-    {
-      no: "07",
+      group: "Advise",
       title: "Product Consulting",
       body:
-        "Clear advice before you build — scoping the product, choosing the right stack, and mapping a path from first release to durable growth.",
-    },
-    {
-      no: "08",
-      title: "Prototyping",
-      body:
-        "Clickable, testable prototypes that let teams feel a product and make decisions before it's built.",
+        "Clear advice before you build — scoping the product, choosing the right stack, and mapping a path to launch.",
     },
   ],
 
   projects: [
     {
-      id: "ledger",
-      title: "Ledger",
+      id: "egounor",
+      title: "EgoUnor",
+      year: "2026",
+      tag: "Contribution Tracker · Live",
+      featured: true,
+      img: "assets/images/projects/EgoUnor.jpg",
+      url: "https://egounor.com",
+      outcome: "Live contribution tracking for groups — transparent balances, less follow-up chaos.",
+      blurb:
+        "A contribution tracking and management system that shows a group exactly who has paid and what's outstanding — built for transparency and easy follow-up.",
+    },
+    {
+      id: "dmacautos",
+      title: "DmacAutos",
+      year: "2026",
+      tag: "Auto Workshop · Booking System",
+      img: "assets/images/projects/DmacAutos.jpg",
+      blurb:
+        "A website for an auto repair shop that takes customer bookings, lets the team reply to them, and keeps owners updated as their repairs move along.",
+    },
+    {
+      id: "syncpay",
+      title: "SyncPay",
       year: "2025",
-      tag: "Fintech · Web App",
+      tag: "Social Finance · Web App",
+      img: "assets/images/projects/SyncPay.jpg",
       blurb:
-        "A personal-finance dashboard rebuilt around a single, scannable timeline. Full system + frontend.",
+        "A social finance platform that helps groups, friends and communities manage shared money together — without the usual confusion over who owes what.",
     },
     {
-      id: "atlas",
-      title: "Atlas",
-      year: "2024",
-      tag: "Logistics · Mobile",
+      id: "expensetracking",
+      title: "Expense Tracker",
+      year: "2025",
+      tag: "Expense Tracker · Web App",
+      img: "assets/images/projects/ExpenseTracking.jpg",
       blurb:
-        "Fleet-tracking app for an African logistics network — offline-first, designed for low-bandwidth.",
-    },
-    {
-      id: "press",
-      title: "Press",
-      year: "2024",
-      tag: "Publishing · Web",
-      blurb:
-        "An editorial CMS and reading experience for an independent journal. Typography-led, calm, fast.",
-    },
-    {
-      id: "signal",
-      title: "Signal",
-      year: "2023",
-      tag: "SaaS · Design System",
-      blurb:
-        "A component library and documentation site adopted across four product teams at Northwind Labs.",
+        "A secure expense tracker and blog that helps people record their spending, stay on budget, and keep all their financial notes in one place.",
     },
   ],
 
