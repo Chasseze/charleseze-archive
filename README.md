@@ -5,12 +5,15 @@ A personal portfolio / résumé-as-website for **Charles Eze** (Product Designer
 
 The design ships with **two interchangeable layout directions** and a small set of live layout controls (see *Design Variants* below).
 
-## About the Design Files
-The files in this bundle are **design references created in HTML/React (Babel-in-browser)** — prototypes that demonstrate intended look, layout, and behavior. They are **not production code to copy directly**.
+## Development & Build
+The site is a static React app, precompiled ahead of time (no in-browser Babel, no bundler).
 
-The task is to **recreate these designs in the target codebase's existing environment** (React, Vue, Svelte, Astro, plain HTML/CSS, etc.) using its established patterns, component library, and build tooling. If no environment exists yet, choose the most appropriate stack for a content-driven personal site (a static-site generator like Astro/Next, or plain HTML/CSS, is a great fit — there is no heavy app state here).
-
-The in-browser Babel + CDN-React setup used here is purely for prototyping convenience and should **not** be carried into production.
+- **Source of truth**: `src/app.jsx` (all components) + `data.js` (all content) + `styles.css` (design system).
+- **Build**: `npm install` once, then `npm run build` — compiles `src/app.jsx` → `app.compiled.js` (committed, so Vercel needs no build step). Re-run after every edit to `src/app.jsx`.
+- **Run locally**: `npm run dev` (serves on http://localhost:3032).
+- **Deploy**: `npm run deploy:prod` (Vercel, static).
+- React is self-hosted from `vendor/` (no CDN dependency).
+- **Theming**: dark (default) and light themes via CSS variables on `[data-theme]`; a topbar/cover toggle persists the choice in `localStorage`, with `prefers-color-scheme` as the first-visit default.
 
 ## Fidelity
 **High-fidelity (hifi).** Final colors, typography, spacing, transitions, and interactions are all specified. Recreate the UI pixel-accurately using the codebase's libraries. All exact tokens are in *Design Tokens* below.
@@ -126,10 +129,10 @@ No icon set is used. Fonts load from Google Fonts (Newsreader, Hanken Grotesk, I
 All copy is **placeholder-but-believable** and lives in `data.js` (identity, nav, about, experience, services, projects, writing, contact). Charles should review/replace it before launch — the structure is final, the words are drafts.
 
 ## Files
-In this bundle (under the project root in the prototype):
-- `CharlesEZE Portfolio.html` — entry point; loads fonts, React/Babel (prototype only), styles, and the component scripts; defines `App` (nav state + variant wiring + Tweaks panel).
-- `styles.css` — the full design system + all component styles (the source of truth for tokens and layout).
+- `index.html` — entry point; fonts, theme bootstrap, and deferred scripts (`data.js` → vendored React → `app.compiled.js`).
+- `src/app.jsx` — all React components (shells, sections, tweaks panel, theme toggle). Edit this, then `npm run build`.
+- `app.compiled.js` — build output of `src/app.jsx` (committed; do not edit by hand).
+- `styles.css` — the full design system + all component styles (source of truth for tokens, layout, and both themes).
 - `data.js` — all content as a `window.PORTFOLIO` object.
-- `sections.jsx` — the six section components + shared `SectionHead`, `StageFoot`, and image `Placeholder`.
-- `shells.jsx` — `ArchiveShell` (sidebar) and `EditorialShell` (top-nav) + shared `TopBar`.
-- `tweaks-panel.jsx` — prototype-only tweak panel scaffold (not for production).
+- `vendor/` — self-hosted React 18 UMD bundles.
+- `assets/images/` — portrait, cover, and project imagery (pre-optimized).

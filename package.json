@@ -6,7 +6,13 @@
   "scripts": {
     "dev": "python3 -m http.server 3032",
     "start": "python3 -m http.server 3032",
+    "build": "babel src/app.jsx --out-file app.compiled.js",
     "deploy": "vercel",
     "deploy:prod": "vercel --prod"
+  },
+  "devDependencies": {
+    "@babel/cli": "^8.0.4",
+    "@babel/core": "^8.0.1",
+    "@babel/preset-react": "^8.0.1"
   }
 }

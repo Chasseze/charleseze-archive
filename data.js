@@ -105,6 +105,13 @@ window.PORTFOLIO = {
       body:
         "Clear advice before you build — scoping the product, choosing the right stack, and mapping a path to launch.",
     },
+    {
+      no: "06",
+      group: "Advise",
+      title: "Maintenance & Support",
+      body:
+        "Ongoing care after launch — updates, performance monitoring, content changes, and steady iteration as the product grows.",
+    },
   ],
 
   projects: [
