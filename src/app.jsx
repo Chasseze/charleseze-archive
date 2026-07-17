@@ -945,9 +945,6 @@ function Cover({ onEnter }) {
               </button>
             </div>
           </div>
-          <aside className="cover-aside">
-            <Placeholder label="Charles Eze cover" className="cover-photo" src="assets/images/chassezecover.jpg" eager />
-          </aside>
         </div>
       </div>
     </div>

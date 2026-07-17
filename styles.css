@@ -32,6 +32,10 @@
   --ph-label-bg: rgba(12, 14, 16, 0.55);
   --ghost-stroke: rgba(201, 149, 90, 0.14);
   --title-shadow: 0 22px 70px rgba(0, 0, 0, 0.34);
+  --cover-scrim-a: rgba(12, 14, 16, 0.8);
+  --cover-scrim-b: rgba(12, 14, 16, 0.52);
+  --cover-scrim-c: rgba(12, 14, 16, 0.16);
+  --panel-glass: rgba(23, 27, 32, 0.78);
   --shadow: 0 24px 60px rgba(0, 0, 0, 0.42);
   --shadow-soft: 0 12px 32px rgba(0, 0, 0, 0.28);
   --glow: radial-gradient(ellipse 80% 55% at 70% 10%, rgba(201, 149, 90, 0.09), transparent 55%),
@@ -81,6 +85,10 @@
   --ph-label-bg: rgba(250, 248, 242, 0.7);
   --ghost-stroke: rgba(160, 100, 38, 0.22);
   --title-shadow: 0 18px 50px rgba(80, 60, 25, 0.16);
+  --cover-scrim-a: rgba(244, 241, 234, 0.88);
+  --cover-scrim-b: rgba(244, 241, 234, 0.62);
+  --cover-scrim-c: rgba(244, 241, 234, 0.22);
+  --panel-glass: rgba(250, 248, 242, 0.82);
   --shadow: 0 24px 60px rgba(80, 62, 30, 0.16);
   --shadow-soft: 0 12px 32px rgba(80, 62, 30, 0.1);
   --glow: radial-gradient(ellipse 80% 55% at 70% 10%, rgba(160, 100, 38, 0.07), transparent 55%),
@@ -1266,7 +1274,7 @@ a:focus-visible {
   display: flex;
   flex-direction: column;
   gap: clamp(18px, 3vh, 32px);
-  margin: clamp(10px, 1.6vw, 16px);
+  margin: clamp(8px, 1.2vw, 0.1in);
   padding: clamp(20px, 3.4vw, 42px);
   border: 1px solid var(--line-2);
   border-left: 3px solid var(--accent);
@@ -1278,13 +1286,37 @@ a:focus-visible {
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.035), var(--shadow);
 }
 
+/* full-bleed cover photo behind the frame content */
+.cover-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url("assets/images/chassezecover.jpg");
+  background-size: cover;
+  background-position: 82% 28%;
+}
+
+/* scrim — keeps the hero name legible; strongest over the text column */
+.cover-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    linear-gradient(90deg, var(--cover-scrim-a) 0%, var(--cover-scrim-a) 34%, var(--cover-scrim-b) 60%, var(--cover-scrim-c) 100%),
+    linear-gradient(0deg, var(--cover-scrim-b) 0%, transparent 34%);
+}
+
 .cover-body {
   flex: 1 1 auto;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 280px;
+  grid-template-columns: minmax(0, 1fr);
   gap: clamp(24px, 4vw, 48px);
   align-items: stretch;
   min-height: 0;
+  position: relative;
+  z-index: 1;
 }
 .cover-main {
   display: flex;
@@ -1293,23 +1325,9 @@ a:focus-visible {
   gap: clamp(18px, 3vh, 28px);
   min-width: 0;
 }
-.cover-aside {
-  width: 280px;
-  flex: 0 0 280px;
-}
-.cover-photo {
-  width: 100%;
-  height: 100%;
-  min-height: 320px;
-  aspect-ratio: 4 / 5;
-}
-.cover-photo.ph-filled,
 .portrait.ph-filled,
 .contact-photo.ph-filled {
   display: block;
-}
-.cover-photo.ph-filled img {
-  object-position: 52% 28%;
 }
 .contact-photo.ph-filled img {
   object-position: 52% 28%;
@@ -1321,15 +1339,17 @@ a:focus-visible {
 .cover-name { animation: rise 560ms cubic-bezier(0.22, 1, 0.36, 1) both 300ms; }
 .cover-tagline { animation: rise 560ms cubic-bezier(0.22, 1, 0.36, 1) both 430ms; }
 .cover-bottom { animation: rise 520ms cubic-bezier(0.22, 1, 0.36, 1) both 620ms; }
-.cover-aside { animation: rise 520ms cubic-bezier(0.22, 1, 0.36, 1) both 500ms; }
 
 /* top rule */
 .cover-top {
+  margin-top: -0.3in;
   display: flex; justify-content: space-between; align-items: center; gap: 16px;
   font-family: var(--mono);
   font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase;
   padding: 12px 16px;
-  background: var(--panel);
+  background: var(--panel-glass);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border: 1px solid var(--line);
   position: relative;
   z-index: 1;
@@ -1368,7 +1388,7 @@ a:focus-visible {
 .cover-tagline {
   font-family: var(--serif);
   font-weight: 400;
-  font-size: clamp(1.1rem, 2.1vw, 1.62rem);
+  font-size: clamp(1.35rem, 2.7vw, 2.05rem);
   line-height: 1.34;
   color: var(--ink-2);
   max-width: 30ch;
@@ -1378,25 +1398,34 @@ a:focus-visible {
 
 /* bottom block */
 .cover-bottom {
+  margin-bottom: -0.2in;
   display: flex; align-items: flex-end; justify-content: space-between;
-  gap: 22px; flex-wrap: wrap;
-  padding: 18px 20px;
-  background: var(--panel);
+  gap: 16px; flex-wrap: wrap;
+  padding: 8px 10px;
+  background: var(--panel-glass);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border: 1px solid var(--line);
   position: relative;
   z-index: 1;
 }
 .cover-meta {
   display: flex; gap: 0; flex-wrap: wrap;
+  flex: 1 1 0;
+  min-width: 0;
 }
 .cover-meta .cm {
   display: flex; flex-direction: column; gap: 6px;
-  padding-right: 24px;
+  flex: 0 1 auto;
+  padding-right: 18px;
 }
+.cover-meta .cm .v { white-space: nowrap; }
 .cover-meta .cm + .cm {
-  padding-left: 24px;
+  padding-left: 18px;
   border-left: 1px solid var(--line);
 }
+.cover-meta .cm:nth-child(2) { margin-left: 0.3in; }
+.cover-meta .cm:last-child { margin-left: 0.4in; }
 .cover-meta .cm .k {
   font-family: var(--mono);
   font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase;
@@ -1408,6 +1437,7 @@ a:focus-visible {
 
 /* enter button */
 .cover-enter {
+  margin-right: 0.3in;
   appearance: none; cursor: pointer;
   display: inline-flex; align-items: center; gap: 14px;
   background: var(--accent);
@@ -1444,11 +1474,6 @@ a:focus-visible {
     gap: 28px;
   }
   .contact-aside { width: 260px; }
-  .cover-body {
-    grid-template-columns: minmax(0, 1fr) 220px;
-    gap: 24px;
-  }
-  .cover-aside { width: 220px; flex-basis: 220px; }
   .services .svc:nth-child(even) { padding-left: 0; border-left: 0; }
   .services .svc:nth-child(even):hover { padding-left: 14px; }
   .tl-row { grid-template-columns: 1fr; gap: 8px; }
@@ -1571,18 +1596,6 @@ a:focus-visible {
     padding: 16px;
     gap: 18px;
   }
-  .cover-body {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-  .cover-aside {
-    width: 100%;
-    flex-basis: auto;
-  }
-  .cover-photo {
-    min-height: 180px;
-    aspect-ratio: 16 / 9;
-  }
   .cover-top {
     flex-direction: column;
     align-items: stretch;
@@ -1607,17 +1620,20 @@ a:focus-visible {
     font-size: clamp(2.45rem, 14vw, 4rem);
   }
   .cover-tagline {
-    font-size: 1.18rem;
+    font-size: 1.42rem;
     line-height: 1.32;
     margin-top: 16px;
     max-width: 26ch;
   }
   .cover-bottom {
     align-items: flex-start;
+    align-self: stretch;
     flex-direction: column;
     gap: 14px;
-    padding: 14px 16px;
+    padding: 10px 12px;
   }
+  .cover-meta .cm:nth-child(2),
+  .cover-meta .cm:last-child { margin-left: 0; }
   .cover-meta {
     flex-direction: column;
     width: 100%;
@@ -1636,6 +1652,7 @@ a:focus-visible {
     width: 100%;
     justify-content: center;
     padding: 11px 16px;
+    margin-right: 0;
   }
   .contact-grid {
     grid-template-columns: 1fr;
@@ -1691,6 +1708,7 @@ a:focus-visible {
   .cover-enter {
     width: auto;
     flex: 0 0 auto;
+    margin-right: 0;
   }
 }
 

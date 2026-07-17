@@ -1111,14 +1111,7 @@ function Cover({
     onClick: onEnter
   }, /*#__PURE__*/React.createElement("span", null, "Enter the archive"), /*#__PURE__*/React.createElement("span", {
     className: "cover-arrow"
-  }, "→")))), /*#__PURE__*/React.createElement("aside", {
-    className: "cover-aside"
-  }, /*#__PURE__*/React.createElement(Placeholder, {
-    label: "Charles Eze cover",
-    className: "cover-photo",
-    src: "assets/images/chassezecover.jpg",
-    eager: true
-  })))));
+  }, "→")))))));
 }
 
 /* ============================================================
