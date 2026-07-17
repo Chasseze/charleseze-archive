@@ -8,3 +8,7 @@ sections.jsx
 shells.jsx
 tweaks-panel.jsx
 .DS_Store
+node_modules
+src
+babel.config.json
+package-lock.json

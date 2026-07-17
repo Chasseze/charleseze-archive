@@ -9,7 +9,7 @@ The design ships with **two interchangeable layout directions** and a small set 
 The site is a static React app, precompiled ahead of time (no in-browser Babel, no bundler).
 
 - **Source of truth**: `src/app.jsx` (all components) + `data.js` (all content) + `styles.css` (design system).
-- **Build**: `npm install` once, then `npm run build` — compiles `src/app.jsx` → `app.compiled.js` (committed, so Vercel needs no build step). Re-run after every edit to `src/app.jsx`.
+- **Build**: `npm install` once, then `npm run build:app` — compiles `src/app.jsx` → `app.compiled.js` (committed, so Vercel needs no build step). Re-run after every edit to `src/app.jsx`.
 - **Run locally**: `npm run dev` (serves on http://localhost:3032).
 - **Deploy**: `npm run deploy:prod` (Vercel, static).
 - React is self-hosted from `vendor/` (no CDN dependency).
@@ -130,7 +130,7 @@ All copy is **placeholder-but-believable** and lives in `data.js` (identity, nav
 
 ## Files
 - `index.html` — entry point; fonts, theme bootstrap, and deferred scripts (`data.js` → vendored React → `app.compiled.js`).
-- `src/app.jsx` — all React components (shells, sections, tweaks panel, theme toggle). Edit this, then `npm run build`.
+- `src/app.jsx` — all React components (shells, sections, tweaks panel, theme toggle). Edit this, then `npm run build:app`.
 - `app.compiled.js` — build output of `src/app.jsx` (committed; do not edit by hand).
 - `styles.css` — the full design system + all component styles (source of truth for tokens, layout, and both themes).
 - `data.js` — all content as a `window.PORTFOLIO` object.
