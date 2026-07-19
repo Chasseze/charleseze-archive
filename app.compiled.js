@@ -494,8 +494,116 @@ function ExperienceSection() {
     meta: "INDEX / 01"
   }));
 }
+function ServiceDetail({
+  service,
+  onBack
+}) {
+  const s = service;
+  return /*#__PURE__*/React.createElement("section", {
+    className: "section"
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "note-back",
+    onClick: onBack
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "note-back-arrow"
+  }, "←"), /*#__PURE__*/React.createElement("span", null, "All services")), /*#__PURE__*/React.createElement("article", {
+    className: "svc-detail"
+  }, s.img && /*#__PURE__*/React.createElement("div", {
+    className: "svc-detail-media"
+  }, /*#__PURE__*/React.createElement(Placeholder, {
+    label: s.title,
+    className: "svc-detail-img",
+    src: s.img,
+    eager: true
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "note-head"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "note-topic"
+  }, s.group), /*#__PURE__*/React.createElement("span", {
+    className: "note-meta"
+  }, "Service " + s.no)), /*#__PURE__*/React.createElement("h1", {
+    className: "note-detail-title"
+  }, s.title), /*#__PURE__*/React.createElement("div", {
+    className: "note-body"
+  }, /*#__PURE__*/React.createElement("p", null, s.overview || s.body)), s.included && s.included.length > 0 && /*#__PURE__*/React.createElement("div", {
+    className: "svc-detail-block"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "svc-detail-label"
+  }, "What's included"), /*#__PURE__*/React.createElement("ul", {
+    className: "svc-detail-list"
+  }, s.included.map((item, i) => /*#__PURE__*/React.createElement("li", {
+    key: i
+  }, item)))), s.process && s.process.length > 0 && /*#__PURE__*/React.createElement("div", {
+    className: "svc-detail-block"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "svc-detail-label"
+  }, "How we work"), /*#__PURE__*/React.createElement("ol", {
+    className: "svc-process"
+  }, s.process.map((p, i) => /*#__PURE__*/React.createElement("li", {
+    key: i,
+    className: "svc-process-step"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "svc-process-no"
+  }, String(i + 1).padStart(2, "0")), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", {
+    className: "svc-process-title"
+  }, p.step), /*#__PURE__*/React.createElement("p", {
+    className: "svc-process-detail"
+  }, p.detail)))))), s.goodFor && s.goodFor.length > 0 && /*#__PURE__*/React.createElement("div", {
+    className: "note-takeaways"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "note-takeaways-label"
+  }, "Good fit if"), /*#__PURE__*/React.createElement("ul", null, s.goodFor.map((g, i) => /*#__PURE__*/React.createElement("li", {
+    key: i
+  }, g)))), /*#__PURE__*/React.createElement("a", {
+    className: "inline-cta svc-detail-cta",
+    href: "#contact"
+  }, /*#__PURE__*/React.createElement("span", null, "Discuss a project"), /*#__PURE__*/React.createElement("span", {
+    className: "inline-cta-arrow",
+    "aria-hidden": "true"
+  }, "→"))), /*#__PURE__*/React.createElement(StageFoot, {
+    meta: "INDEX / 02 — " + s.group.toUpperCase()
+  }));
+}
 function ServicesSection() {
   const D = window.PORTFOLIO;
+  const [activeId, setActiveId] = React.useState(() => {
+    const hash = window.location.hash.slice(1);
+    if (!hash.startsWith("service-")) return null;
+    const id = hash.slice(8);
+    return D.services.some(s => s.id === id) ? id : null;
+  });
+  React.useEffect(() => {
+    const syncFromHash = () => {
+      const hash = window.location.hash.slice(1);
+      if (hash.startsWith("service-")) {
+        const id = hash.slice(8);
+        if (D.services.some(s => s.id === id)) {
+          setActiveId(id);
+          return;
+        }
+      }
+      setActiveId(null);
+    };
+    syncFromHash();
+    window.addEventListener("hashchange", syncFromHash);
+    return () => window.removeEventListener("hashchange", syncFromHash);
+  }, []);
+  const openService = id => {
+    setActiveId(id);
+    window.history.replaceState(null, "", "#service-" + id);
+  };
+  const closeService = () => {
+    setActiveId(null);
+    window.history.replaceState(null, "", "#services");
+  };
+  const service = D.services.find(s => s.id === activeId);
+  if (service) {
+    return /*#__PURE__*/React.createElement(ServiceDetail, {
+      service: service,
+      onBack: closeService
+    });
+  }
   let lastGroup = null;
   return /*#__PURE__*/React.createElement("section", {
     className: "section"
@@ -508,19 +616,35 @@ function ServicesSection() {
   }, D.services.map((s, i) => {
     const showGroup = s.group && s.group !== lastGroup;
     if (s.group) lastGroup = s.group;
-    return /*#__PURE__*/React.createElement("article", {
+    return /*#__PURE__*/React.createElement("button", {
+      type: "button",
       className: "svc" + (showGroup ? " svc-group-start" : ""),
-      key: s.no || i,
-      "data-group": s.group || undefined
+      key: s.id || s.no || i,
+      "data-group": s.group || undefined,
+      onClick: () => s.id && openService(s.id)
     }, showGroup && /*#__PURE__*/React.createElement("div", {
       className: "svc-group"
     }, s.group), /*#__PURE__*/React.createElement("div", {
+      className: "svc-row"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "svc-copy"
+    }, /*#__PURE__*/React.createElement("div", {
       className: "svc-no"
     }, s.no), /*#__PURE__*/React.createElement("h3", {
       className: "svc-title"
     }, s.title), /*#__PURE__*/React.createElement("p", {
       className: "svc-body"
-    }, s.body));
+    }, s.body), s.id && /*#__PURE__*/React.createElement("span", {
+      className: "svc-more"
+    }, "Learn more ", /*#__PURE__*/React.createElement("span", {
+      "aria-hidden": "true"
+    }, "→"))), s.img && /*#__PURE__*/React.createElement("div", {
+      className: "svc-thumb"
+    }, /*#__PURE__*/React.createElement(Placeholder, {
+      label: s.title,
+      className: "svc-thumb-img",
+      src: s.img
+    }))));
   })), /*#__PURE__*/React.createElement(StageFoot, {
     meta: "INDEX / 02"
   }));
@@ -1178,6 +1302,14 @@ function App() {
         const noteId = hash.slice(5);
         if (window.PORTFOLIO.notes.some(n => n.id === noteId)) {
           setActive("notes");
+          setPage("archive");
+          return;
+        }
+      }
+      if (hash.startsWith("service-")) {
+        const serviceId = hash.slice(8);
+        if (window.PORTFOLIO.services.some(s => s.id === serviceId)) {
+          setActive("services");
           setPage("archive");
           return;
         }

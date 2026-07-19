@@ -71,46 +71,179 @@ window.PORTFOLIO = {
 
   services: [
     {
+      id: "product-design",
+      img: "assets/images/services/product-design.jpg",
       no: "01",
       group: "Design",
       title: "Product Design",
       body:
         "End-to-end interface design — research, flows, prototypes and high-fidelity UI for web and mobile.",
+      overview:
+        "I design the product before anyone writes a line of code — starting from the problem a real user has, not from a blank canvas. That means understanding who the interface is for, mapping the flow they need to complete, and only then deciding what it should look like. The goal is always the same: something a first-time visitor understands without being told how.",
+      included: [
+        "Discovery — audience, goals, and the one job the product has to do well",
+        "User flows and information architecture for every core journey",
+        "Wireframes to test structure before visual design begins",
+        "High-fidelity UI for web and mobile, in light and dark states",
+        "An interactive prototype you can click through and share",
+        "Developer-ready handoff — specs, states, and assets",
+      ],
+      process: [
+        { step: "Understand", detail: "Short discovery conversation to pin down the audience, the goal, and what success looks like." },
+        { step: "Structure", detail: "Flows and wireframes that get the logic right before any visual polish." },
+        { step: "Design", detail: "High-fidelity screens, iterated with you until the interface feels obvious." },
+        { step: "Handoff", detail: "Clean specs and assets your developer — or I — can build from directly." },
+      ],
+      goodFor: [
+        "You have a rough idea or an existing product that needs a clearer interface",
+        "You want the flow tested and simplified before it's expensive to change",
+        "You need design files a developer can actually build from",
+      ],
     },
     {
+      id: "design-systems",
+      img: "assets/images/services/design-systems.jpg",
       no: "02",
       group: "Design",
       title: "Design Systems",
       body:
         "Durable component libraries and token systems that keep a growing product consistent and fast to build.",
+      overview:
+        "As a product grows, inconsistency compounds — a button here, a slightly different one there, three shades of the same blue. A design system fixes that at the source: one set of components, tokens, and rules that both design and code pull from, so new screens get faster to ship instead of slower.",
+      included: [
+        "Audit of existing screens to find and resolve inconsistencies",
+        "A token system for color, type, spacing, and motion",
+        "A documented component library, built in Figma and matched in code",
+        "Usage guidelines so the system stays consistent without you policing it",
+        "A rollout plan for migrating existing screens incrementally",
+      ],
+      process: [
+        { step: "Audit", detail: "Review current screens and components to see what's duplicated or drifting." },
+        { step: "Define", detail: "Establish the token system and core component set." },
+        { step: "Build", detail: "Design and build components in parallel, so design and code never diverge." },
+        { step: "Document", detail: "Usage rules and examples so the team can extend it correctly without me." },
+      ],
+      goodFor: [
+        "Your product has grown past a handful of screens and it's starting to show",
+        "Multiple people touch the design or codebase and consistency is slipping",
+        "You're planning new features and want a faster foundation to build on",
+      ],
     },
     {
+      id: "frontend-development",
+      img: "assets/images/services/frontend-development.jpg",
       no: "03",
       group: "Build",
       title: "Frontend Development",
       body:
         "Pixel-accurate, accessible frontends in React and TypeScript — the bridge from design file to shipped code.",
+      overview:
+        "This is where a design file becomes something people can actually use. I build interfaces in React and TypeScript that match the design closely, hold up under real content and real screen sizes, and stay fast — because a beautiful interface that loads slowly on a phone isn't a finished product.",
+      included: [
+        "Component-based build in React and TypeScript",
+        "Responsive layouts tested across real device sizes, not just desktop",
+        "Accessible markup — keyboard navigation, semantic HTML, sensible contrast",
+        "Performance budget — lean assets, lazy loading, minimal dependencies",
+        "Integration with your existing APIs, CMS, or design system",
+      ],
+      process: [
+        { step: "Scope", detail: "Confirm the design files, states, and technical constraints before building." },
+        { step: "Build", detail: "Component-by-component development, checked against the design at each step." },
+        { step: "Harden", detail: "Real-device testing, accessibility pass, and performance tuning." },
+        { step: "Ship", detail: "Deployed and handed over with clean, documented code." },
+      ],
+      goodFor: [
+        "You have designs — from me or elsewhere — that need to become a real product",
+        "Your current frontend feels slow, inconsistent, or hard to extend",
+        "You want code that the next developer can read without a handoff call",
+      ],
     },
     {
+      id: "full-stack-development",
+      img: "assets/images/services/full-stack-development.jpg",
       no: "04",
       group: "Build",
       title: "Full-Stack Development",
       body:
         "End-to-end product builds across interface and server — APIs, auth, data models and the shipped frontend.",
+      overview:
+        "For products that need more than a frontend — a database, user accounts, business logic, integrations — I build the whole thing: a data model that fits how the product actually works, an API that's simple to reason about, and the interface on top, all built by one person who understands how the pieces connect.",
+      included: [
+        "Data modeling and database design for the product's real needs",
+        "API design and implementation — REST or GraphQL, whichever fits",
+        "Authentication, authorization, and role-based access where needed",
+        "Third-party integrations — payments, email, storage, analytics",
+        "The shipped frontend, connected end-to-end and deployed",
+      ],
+      process: [
+        { step: "Plan", detail: "Map the data model and core flows before writing infrastructure code." },
+        { step: "Build the core", detail: "Database, API, and auth first — the foundation everything else depends on." },
+        { step: "Build the interface", detail: "Frontend built against the real API, not a mock." },
+        { step: "Deploy & support", detail: "Shipped to production with monitoring in place, and support after launch." },
+      ],
+      goodFor: [
+        "You're building a product from scratch and want one person who owns the whole stack",
+        "You need accounts, payments, or a real database — not just static pages",
+        "You want to avoid the handoff gaps that happen between separate design, frontend, and backend teams",
+      ],
     },
     {
+      id: "product-consulting",
+      img: "assets/images/services/product-consulting.jpg",
       no: "05",
       group: "Advise",
       title: "Product Consulting",
       body:
         "Clear advice before you build — scoping the product, choosing the right stack, and mapping a path to launch.",
+      overview:
+        "Before committing real budget to a build, it's worth spending a little time getting the plan right. I help founders and teams scope what the product actually needs to do first, choose a stack that fits the team and the timeline, and turn a vague idea into a plan a developer can quote against.",
+      included: [
+        "A scoping session to separate must-haves from nice-to-haves",
+        "A stack recommendation suited to your budget, timeline, and team",
+        "A written project brief you can share with any developer or agency",
+        "Rough cost and timeline guidance based on real project experience",
+        "An honest read on whether you need a website, an app, or neither yet",
+      ],
+      process: [
+        { step: "Listen", detail: "Understand the business goal behind the request, not just the feature list." },
+        { step: "Scope", detail: "Separate what the first version actually needs from what can wait." },
+        { step: "Recommend", detail: "A clear stack and approach, with the reasoning behind it." },
+        { step: "Document", detail: "A brief you can hand to any team — including mine — to get accurate quotes." },
+      ],
+      goodFor: [
+        "You have an idea but aren't sure what to build first or how much it should cost",
+        "You're comparing agencies or developers and want an independent scope to quote against",
+        "You want a second opinion before committing budget to a build",
+      ],
     },
     {
+      id: "maintenance-support",
+      img: "assets/images/services/maintenance-support.jpg",
       no: "06",
       group: "Advise",
       title: "Maintenance & Support",
       body:
         "Ongoing care after launch — updates, performance monitoring, content changes, and steady iteration as the product grows.",
+      overview:
+        "Launch isn't the finish line — it's where real usage starts teaching you what to improve. I offer ongoing support after a build ships: keeping dependencies current, watching performance and errors, making content and small feature changes, and planning the next round of work based on how people actually use the product.",
+      included: [
+        "Regular dependency and security updates",
+        "Performance and uptime monitoring, with fast response to issues",
+        "Content and copy changes as the business evolves",
+        "Small feature additions and refinements between major releases",
+        "A monthly summary of what changed and what's worth prioritizing next",
+      ],
+      process: [
+        { step: "Baseline", detail: "Document what's live, how it's deployed, and what 'healthy' looks like." },
+        { step: "Monitor", detail: "Track performance, errors, and uptime on an ongoing basis." },
+        { step: "Maintain", detail: "Apply updates and fixes before they become visible problems." },
+        { step: "Iterate", detail: "Use real usage data to suggest and ship the next round of improvements." },
+      ],
+      goodFor: [
+        "You've launched and don't want the product to quietly go stale",
+        "You need small, ongoing changes without the overhead of a full new project",
+        "You want one point of contact who already knows the codebase",
+      ],
     },
   ],
 

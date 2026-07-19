@@ -413,8 +413,115 @@ function ExperienceSection() {
   );
 }
 
+function ServiceDetail({ service, onBack }) {
+  const s = service;
+  return (
+    <section className="section">
+      <button type="button" className="note-back" onClick={onBack}>
+        <span className="note-back-arrow">←</span>
+        <span>All services</span>
+      </button>
+      <article className="svc-detail">
+        {s.img && (
+          <div className="svc-detail-media">
+            <Placeholder label={s.title} className="svc-detail-img" src={s.img} eager />
+          </div>
+        )}
+        <div className="note-head">
+          <span className="note-topic">{s.group}</span>
+          <span className="note-meta">{"Service " + s.no}</span>
+        </div>
+        <h1 className="note-detail-title">{s.title}</h1>
+        <div className="note-body">
+          <p>{s.overview || s.body}</p>
+        </div>
+
+        {s.included && s.included.length > 0 && (
+          <div className="svc-detail-block">
+            <span className="svc-detail-label">What's included</span>
+            <ul className="svc-detail-list">
+              {s.included.map((item, i) => <li key={i}>{item}</li>)}
+            </ul>
+          </div>
+        )}
+
+        {s.process && s.process.length > 0 && (
+          <div className="svc-detail-block">
+            <span className="svc-detail-label">How we work</span>
+            <ol className="svc-process">
+              {s.process.map((p, i) => (
+                <li key={i} className="svc-process-step">
+                  <span className="svc-process-no">{String(i + 1).padStart(2, "0")}</span>
+                  <div>
+                    <span className="svc-process-title">{p.step}</span>
+                    <p className="svc-process-detail">{p.detail}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+        )}
+
+        {s.goodFor && s.goodFor.length > 0 && (
+          <div className="note-takeaways">
+            <span className="note-takeaways-label">Good fit if</span>
+            <ul>
+              {s.goodFor.map((g, i) => <li key={i}>{g}</li>)}
+            </ul>
+          </div>
+        )}
+
+        <a className="inline-cta svc-detail-cta" href="#contact">
+          <span>Discuss a project</span>
+          <span className="inline-cta-arrow" aria-hidden="true">→</span>
+        </a>
+      </article>
+      <StageFoot meta={"INDEX / 02 — " + s.group.toUpperCase()} />
+    </section>
+  );
+}
+
 function ServicesSection() {
   const D = window.PORTFOLIO;
+  const [activeId, setActiveId] = React.useState(() => {
+    const hash = window.location.hash.slice(1);
+    if (!hash.startsWith("service-")) return null;
+    const id = hash.slice(8);
+    return D.services.some((s) => s.id === id) ? id : null;
+  });
+
+  React.useEffect(() => {
+    const syncFromHash = () => {
+      const hash = window.location.hash.slice(1);
+      if (hash.startsWith("service-")) {
+        const id = hash.slice(8);
+        if (D.services.some((s) => s.id === id)) {
+          setActiveId(id);
+          return;
+        }
+      }
+      setActiveId(null);
+    };
+    syncFromHash();
+    window.addEventListener("hashchange", syncFromHash);
+    return () => window.removeEventListener("hashchange", syncFromHash);
+  }, []);
+
+  const openService = (id) => {
+    setActiveId(id);
+    window.history.replaceState(null, "", "#service-" + id);
+  };
+
+  const closeService = () => {
+    setActiveId(null);
+    window.history.replaceState(null, "", "#services");
+  };
+
+  const service = D.services.find((s) => s.id === activeId);
+  if (service) {
+    return <ServiceDetail service={service} onBack={closeService} />;
+  }
+
   let lastGroup = null;
   return (
     <section className="section">
@@ -424,12 +531,32 @@ function ServicesSection() {
           const showGroup = s.group && s.group !== lastGroup;
           if (s.group) lastGroup = s.group;
           return (
-            <article className={"svc" + (showGroup ? " svc-group-start" : "")} key={s.no || i} data-group={s.group || undefined}>
+            <button
+              type="button"
+              className={"svc" + (showGroup ? " svc-group-start" : "")}
+              key={s.id || s.no || i}
+              data-group={s.group || undefined}
+              onClick={() => s.id && openService(s.id)}
+            >
               {showGroup && <div className="svc-group">{s.group}</div>}
-              <div className="svc-no">{s.no}</div>
-              <h3 className="svc-title">{s.title}</h3>
-              <p className="svc-body">{s.body}</p>
-            </article>
+              <div className="svc-row">
+                <div className="svc-copy">
+                  <div className="svc-no">{s.no}</div>
+                  <h3 className="svc-title">{s.title}</h3>
+                  <p className="svc-body">{s.body}</p>
+                  {s.id && (
+                    <span className="svc-more">
+                      Learn more <span aria-hidden="true">→</span>
+                    </span>
+                  )}
+                </div>
+                {s.img && (
+                  <div className="svc-thumb">
+                    <Placeholder label={s.title} className="svc-thumb-img" src={s.img} />
+                  </div>
+                )}
+              </div>
+            </button>
           );
         })}
       </div>
@@ -1019,6 +1146,14 @@ function App() {
         const noteId = hash.slice(5);
         if (window.PORTFOLIO.notes.some((n) => n.id === noteId)) {
           setActive("notes");
+          setPage("archive");
+          return;
+        }
+      }
+      if (hash.startsWith("service-")) {
+        const serviceId = hash.slice(8);
+        if (window.PORTFOLIO.services.some((s) => s.id === serviceId)) {
+          setActive("services");
           setPage("archive");
           return;
         }
