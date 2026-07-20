@@ -934,8 +934,8 @@ a:focus-visible {
 .svc-copy { min-width: 0; flex: 1 1 auto; }
 .svc-thumb {
   flex: 0 0 auto;
-  width: 96px;
-  height: 96px;
+  width: 140px;
+  height: 140px;
   overflow: hidden;
   border: 1px solid var(--line);
 }
@@ -1626,7 +1626,7 @@ a:focus-visible {
     --pad-y: 34px;
     --section-gap: 42px;
   }
-  .svc-thumb { width: 64px; height: 64px; }
+  .svc-thumb { width: 96px; height: 96px; }
   .svc-detail-media { aspect-ratio: 16 / 10; margin-bottom: 24px; }
   .topbar {
     height: auto;
